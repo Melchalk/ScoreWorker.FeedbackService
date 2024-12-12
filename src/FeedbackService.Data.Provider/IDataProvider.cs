@@ -1,11 +1,11 @@
 using FeedbackService.Models.Db;
 using Microsoft.EntityFrameworkCore;
 
-namespace FeedbackService.Data;
+namespace FeedbackService.Data.Provider;
 
-/// <summary>
+/// <feedback>
 /// Data provider with DbSets of the app.
-/// </summary>
+/// </feedback>
 public interface IDataProvider : IBaseDataProvider
 {
     DbSet<DbReview> Review { get; set; }

@@ -1,11 +1,12 @@
-using FeedbackService.Data;
+using FeedbackService.Data.Provider;
 using FeedbackService.Models.Db;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace FeedbackService.DataProvider.PostgreSql.Ef;
 
-public class FeedbackServiceDbContext(DbContextOptions<FeedbackServiceDbContext> options) : DbContext(options), IDataProvider
+public class FeedbackServiceDbContext(DbContextOptions<FeedbackServiceDbContext> options)
+    : DbContext(options), IDataProvider
 {
     public DbSet<DbReview> Review { get; set; }
     public DbSet<DbReviewer> Reviewer { get; set; }

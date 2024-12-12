@@ -1,8 +1,8 @@
-namespace FeedbackService.Data;
+namespace FeedbackService.Data.Provider;
 
-/// <summary>
+/// <feedback>
 /// Data provider with provider extra methods.
-/// </summary>
+/// </feedback>
 public interface IBaseDataProvider
 {
     void Save();
