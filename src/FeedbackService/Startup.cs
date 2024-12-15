@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FeedbackService.Business.Feedback;
 using FeedbackService.Business.Feedback.Interfaces;
+using FeedbackService.Business.Reviewer;
+using FeedbackService.Business.Reviewer.Interfaces;
 using FeedbackService.Data;
 using FeedbackService.Data.Interfaces;
 using FeedbackService.Data.Provider;
@@ -32,7 +34,8 @@ internal class Startup(IConfiguration configuration)
 
         services.AddDbContext<FeedbackServiceDbContext>(options =>
         {
-            options.UseNpgsql(Configuration.GetConnectionString("SQLConnectionString"));
+            options.UseNpgsql(Configuration.GetConnectionString("SQLConnectionString"),
+                b => b.MigrationsAssembly(typeof(FeedbackServiceDbContext).Assembly.FullName));
         });
 
         services.AddSingleton(new MapperConfiguration(mc =>
@@ -105,14 +108,22 @@ internal class Startup(IConfiguration configuration)
     private void ConfigureDI(IServiceCollection services)
     {
         services.AddScoped<IDataProvider, FeedbackServiceDbContext>();
+        services.AddScoped<DbContext, FeedbackServiceDbContext>();
 
         services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+        services.AddScoped<IReviewerRepository, ReviewerRepository>();
 
         services.AddScoped<ICreateFeedbackCommand, CreateFeedbackCommand>();
         services.AddScoped<IDeleteFeedbackCommand, DeleteFeedbackCommand>();
-        services.AddScoped<IGetFullFeedbackCommand, GetFullFeedbackCommand>();
+        services.AddScoped<IGetFeedbackForUserCommand, GetFeedbackForUserCommand>();
         services.AddScoped<IGetFeedbackCommand, GetFeedbackCommand>();
         services.AddScoped<IUpdateFeedbackCommand, UpdateFeedbackCommand>();
+
+        services.AddScoped<ICreateReviewerCommand, CreateReviewerCommand>();
+        services.AddScoped<IDeleteReviewerCommand, DeleteReviewerCommand>();
+        services.AddScoped<IGetReviewersByTeamCommand, GetReviewersByTeamCommand>();
+        services.AddScoped<IGetReviewerCommand, GetReviewerCommand>();
+        services.AddScoped<IUpdateReviewerCommand, UpdateReviewerCommand>();
     }
 
     private void UpdateDatabase(IApplicationBuilder app)

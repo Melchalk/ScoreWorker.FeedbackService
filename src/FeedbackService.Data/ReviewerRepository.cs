@@ -4,9 +4,9 @@ using FeedbackService.Models.Db;
 
 namespace FeedbackService.Data;
 
-public class FeedbackRepository(IDataProvider provider) : IFeedbackRepository
+public class ReviewerRepository(IDataProvider provider) : IReviewerRepository
 {
-    public Task CreateAsync(DbFeedback dbFeedback)
+    public Task CreateAsync(DbReviewer dbReviewer)
     {
         throw new NotImplementedException();
     }
@@ -16,12 +16,12 @@ public class FeedbackRepository(IDataProvider provider) : IFeedbackRepository
         throw new NotImplementedException();
     }
 
-    public Task<DbFeedback> GetAsync(Guid id)
+    public Task<DbReviewer> GetAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(DbFeedback dbFeedback)
+    public Task UpdateAsync(DbReviewer dbReviewer)
     {
         throw new NotImplementedException();
     }

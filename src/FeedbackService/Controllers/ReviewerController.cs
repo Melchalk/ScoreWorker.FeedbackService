@@ -1,32 +1,32 @@
-﻿using FeedbackService.Business.Feedback.Interfaces;
-using FeedbackService.Models.Dto.Requests.Feedback;
+﻿using FeedbackService.Business.Reviewer.Interfaces;
+using FeedbackService.Models.Dto.Requests.Reviewer;
 using FeedbackService.Models.Dto.Responses;
-using FeedbackService.Models.Dto.Responses.Feedback;
+using FeedbackService.Models.Dto.Responses.Reviewer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FeedbackService.Controllers;
 
-[SwaggerTag("Управление отзывами")]
+[SwaggerTag("Управление рецензентами")]
 [Authorize]
 [ApiController]
-[Route("api/feedback")]
+[Route("api/reviewer")]
 [Produces("application/json")]
-public class FeedbackController : ControllerBase
+public class ReviewerController : ControllerBase
 {
     [HttpPost("create")]
     public async Task<ResponseInfo<bool>> CreateAsync(
-      [FromServices] ICreateFeedbackCommand command,
-      [FromBody] CreateFeedbackRequest request,
+      [FromServices] ICreateReviewerCommand command,
+      [FromBody] CreateReviewerRequest request,
       CancellationToken cancellationToken)
     {
         return await command.ExecuteAsync(request, cancellationToken);
     }
 
     [HttpGet("get")]
-    public async Task<ResponseInfo<GetFeedbackResponse>> GetAsync(
-      [FromServices] IGetFeedbackCommand command,
+    public async Task<ResponseInfo<GetReviewerResponse>> GetAsync(
+      [FromServices] IGetReviewerCommand command,
       [FromQuery] Guid id,
       CancellationToken cancellationToken)
     {
@@ -35,8 +35,8 @@ public class FeedbackController : ControllerBase
 
     [HttpPut("update")]
     public async Task<ResponseInfo<bool>> UpdateAsync(
-      [FromServices] IUpdateFeedbackCommand command,
-      [FromBody] UpdateFeedbackRequest request,
+      [FromServices] IUpdateReviewerCommand command,
+      [FromBody] UpdateReviewerRequest request,
       CancellationToken cancellationToken)
     {
         return await command.ExecuteAsync(request, cancellationToken);
@@ -44,7 +44,7 @@ public class FeedbackController : ControllerBase
 
     [HttpDelete("remove")]
     public async Task<ResponseInfo<bool>> RemoveAsync(
-      [FromServices] IDeleteFeedbackCommand command,
+      [FromServices] IDeleteReviewerCommand command,
       [FromQuery] Guid id,
       CancellationToken cancellationToken)
     {

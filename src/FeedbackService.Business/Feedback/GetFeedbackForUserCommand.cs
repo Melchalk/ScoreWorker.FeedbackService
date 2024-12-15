@@ -2,6 +2,6 @@
 
 namespace FeedbackService.Business.Feedback;
 
-public class GetFullFeedbackCommand : IGetFullFeedbackCommand
+public class GetFeedbackForUserCommand : IGetFeedbackForUserCommand
 {
 }

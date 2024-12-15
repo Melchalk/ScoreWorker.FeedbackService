@@ -1,5 +1,5 @@
 ﻿namespace FeedbackService.Business.Feedback.Interfaces;
 
-public interface IGetFullFeedbackCommand
+public interface IGetFeedbackForUserCommand
 {
 }
