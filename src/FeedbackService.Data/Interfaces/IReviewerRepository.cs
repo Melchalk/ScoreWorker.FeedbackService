@@ -4,8 +4,8 @@ namespace FeedbackService.Data.Interfaces;
 
 public interface IReviewerRepository
 {
-    Task<DbReviewer> GetAsync(Guid id);
-    Task CreateAsync(DbReviewer dbReviewer);
-    Task UpdateAsync(DbReviewer dbReviewer);
-    Task DeleteAsync(Guid id);
+    Task<DbReviewer?> GetAsync(Guid id, CancellationToken cancellationToken);
+    Task CreateAsync(DbReviewer dbReviewer, CancellationToken cancellationToken);
+    Task<bool> UpdateAsync(DbReviewer dbReviewer, CancellationToken cancellationToken);
+    Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

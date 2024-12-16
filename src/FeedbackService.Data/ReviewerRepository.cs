@@ -1,28 +1,49 @@
 ﻿using FeedbackService.Data.Interfaces;
 using FeedbackService.Data.Provider;
 using FeedbackService.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedbackService.Data;
 
 public class ReviewerRepository(IDataProvider provider) : IReviewerRepository
 {
-    public Task CreateAsync(DbReviewer dbReviewer)
+    public async Task CreateAsync(
+        DbReviewer dbReviewer, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await provider.Reviewers.AddAsync(dbReviewer, cancellationToken);
+
+        await provider.SaveAsync(cancellationToken);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(
+        Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var dbReviewer = await provider.Reviewers
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (dbReviewer is null)
+            return false;
+
+        dbReviewer.IsActive = false;
+
+        await provider.SaveAsync(cancellationToken);
+
+        return true;
     }
 
-    public Task<DbReviewer> GetAsync(Guid id)
+    public async Task<DbReviewer?> GetAsync(
+        Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await provider.Reviewers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
     }
 
-    public Task UpdateAsync(DbReviewer dbReviewer)
+    public async Task<bool> UpdateAsync(
+        DbReviewer dbReviewer, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await provider.SaveAsync(cancellationToken);
+
+        return true;
     }
 }

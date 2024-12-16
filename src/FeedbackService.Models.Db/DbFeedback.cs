@@ -13,6 +13,7 @@ public class DbFeedback
     public Guid ReviewerId { get; set; }
     public Guid UnderReviewId { get; set; }
     public required string Review { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DbReviewer? Reviewer { get; set; }
 }

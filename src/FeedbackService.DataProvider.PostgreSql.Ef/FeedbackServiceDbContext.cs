@@ -9,7 +9,7 @@ public class FeedbackServiceDbContext(DbContextOptions<FeedbackServiceDbContext>
     : DbContext(options), IDataProvider
 {
     public DbSet<DbFeedback> Feedbacks { get; set; }
-    public DbSet<DbReviewer> Reviewer { get; set; }
+    public DbSet<DbReviewer> Reviewers { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -9,5 +9,5 @@ namespace FeedbackService.Data.Provider;
 public interface IDataProvider : IBaseDataProvider
 {
     DbSet<DbFeedback> Feedbacks { get; set; }
-    DbSet<DbReviewer> Reviewer { get; set; }
+    DbSet<DbReviewer> Reviewers { get; set; }
 }

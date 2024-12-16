@@ -1,28 +1,49 @@
 ﻿using FeedbackService.Data.Interfaces;
 using FeedbackService.Data.Provider;
 using FeedbackService.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedbackService.Data;
 
 public class FeedbackRepository(IDataProvider provider) : IFeedbackRepository
 {
-    public Task CreateAsync(DbFeedback dbFeedback)
+    public async Task CreateAsync(
+        DbFeedback dbFeedback, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await provider.Feedbacks.AddAsync(dbFeedback, cancellationToken);
+
+        await provider.SaveAsync(cancellationToken);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(
+        Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var dbFeedback = await provider.Feedbacks
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (dbFeedback is null)
+            return false;
+
+        provider.Feedbacks.Remove(dbFeedback);
+
+        await provider.SaveAsync(cancellationToken);
+
+        return true;
     }
 
-    public Task<DbFeedback> GetAsync(Guid id)
+    public async Task<DbFeedback?> GetAsync(
+        Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await provider.Feedbacks
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
     }
 
-    public Task UpdateAsync(DbFeedback dbFeedback)
+    public async Task<bool> UpdateAsync(
+        DbFeedback dbFeedback, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await provider.SaveAsync(cancellationToken);
+
+        return true;
     }
 }

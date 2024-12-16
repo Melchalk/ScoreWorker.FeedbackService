@@ -6,12 +6,12 @@ namespace FeedbackService.Models.Db;
 
 public class DbReviewer
 {
-    public const string TableName = "ScoreCriterias";
+    public const string TableName = "Reviewers";
 
     [Key]
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-
+    public bool IsActive { get; set; }
 
     public List<DbFeedback>? Feedbacks { get; set; }
 }
