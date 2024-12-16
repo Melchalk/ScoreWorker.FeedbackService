@@ -39,6 +39,15 @@ public class ReviewerRepository(IDataProvider provider) : IReviewerRepository
             .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
     }
 
+    public async Task<DbReviewer?> GetWithFeedbackByUserIdAsync(
+        Guid userId, CancellationToken cancellationToken)
+    {
+        return await provider.Reviewers
+            .AsNoTracking()
+            .Include(r => r.Feedbacks)
+            .FirstOrDefaultAsync(r => r.UserId == userId, cancellationToken);
+    }
+
     public async Task<bool> UpdateAsync(
         DbReviewer dbReviewer, CancellationToken cancellationToken)
     {

@@ -35,15 +35,17 @@ public class GlobalExceptionMiddleware(RequestDelegate next)
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         }
 
+        JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         await context.Response.WriteAsync(JsonSerializer.Serialize(
             new ResponseInfo<object>()
             {
                 ErrorMessage = exception.Message,
                 Status = context.Response.StatusCode
             },
-            options: new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            }));
+            options: options));
     }
 }

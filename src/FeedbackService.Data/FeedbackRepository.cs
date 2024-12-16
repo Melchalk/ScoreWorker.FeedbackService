@@ -31,6 +31,26 @@ public class FeedbackRepository(IDataProvider provider) : IFeedbackRepository
         return true;
     }
 
+    public async Task<bool> SetDismissedUser(
+        Guid reviewerId, CancellationToken cancellationToken)
+    {
+        var reviewer = await provider.Reviewers
+            .Include(r => r.Feedbacks)
+            .FirstOrDefaultAsync(r => r.Id == reviewerId, cancellationToken);
+
+        if (reviewer is null || reviewer.Feedbacks is null)
+            return false;
+
+        foreach(var feedback in reviewer.Feedbacks)
+        {
+            feedback.IsUserWorking = false;
+        }
+
+        await provider.SaveAsync(cancellationToken);
+
+        return true;
+    }
+
     public async Task<DbFeedback?> GetAsync(
         Guid id, CancellationToken cancellationToken)
     {

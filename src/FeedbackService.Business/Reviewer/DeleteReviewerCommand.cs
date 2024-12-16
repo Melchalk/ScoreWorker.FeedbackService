@@ -1,13 +1,23 @@
 ﻿using FeedbackService.Business.Reviewer.Interfaces;
 using FeedbackService.Data.Interfaces;
-using FeedbackService.Models.Dto.Responses;
+using FeedbackService.Models.Dto.Exceptions;
 
 namespace FeedbackService.Business.Reviewer;
 
-public class DeleteReviewerCommand(IReviewerRepository repository) : IDeleteReviewerCommand
+public class DeleteReviewerCommand(
+    IReviewerRepository reviewerRepository,
+    IFeedbackRepository feedbackRepository)
+    : IDeleteReviewerCommand
 {
-    public Task<ResponseInfo<bool>> ExecuteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task ExecuteAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var resultDeletion = await reviewerRepository.DeleteAsync(id, cancellationToken);
+
+        if (!resultDeletion)
+        {
+            throw new BadRequestException($"Reviewer with id = '{id}' was not found.");
+        }
+
+        await feedbackRepository.SetDismissedUser(id, cancellationToken);
     }
 }

@@ -6,5 +6,5 @@ namespace FeedbackService.Business.Feedback.Interfaces;
 
 public interface IUpdateFeedbackCommand
 {
-    Task<ResponseInfo<bool>> ExecuteAsync(UpdateFeedbackRequest request, CancellationToken cancellationToken);
+    Task ExecuteAsync(UpdateFeedbackRequest request, CancellationToken cancellationToken);
 }

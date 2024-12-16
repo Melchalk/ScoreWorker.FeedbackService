@@ -1,13 +1,17 @@
 ﻿using FeedbackService.Business.Feedback.Interfaces;
 using FeedbackService.Data.Interfaces;
-using FeedbackService.Models.Dto.Responses;
+using FeedbackService.Models.Dto.Exceptions;
 
 namespace FeedbackService.Business.Feedback;
 
 public class DeleteFeedbackCommand(IFeedbackRepository repository) : IDeleteFeedbackCommand
 {
-    public Task<ResponseInfo<bool>> ExecuteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task ExecuteAsync(
+        Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (!(await repository.DeleteAsync(id, cancellationToken)))
+        {
+            throw new BadRequestException($"Feedback with id = '{id}' was not found.");
+        }
     }
 }

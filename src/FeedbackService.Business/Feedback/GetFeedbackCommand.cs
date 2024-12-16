@@ -1,15 +1,27 @@
-﻿using FeedbackService.Business.Feedback.Interfaces;
+﻿using AutoMapper;
+using FeedbackService.Business.Feedback.Interfaces;
 using FeedbackService.Data.Interfaces;
+using FeedbackService.Models.Dto.Exceptions;
 using FeedbackService.Models.Dto.Responses;
 using FeedbackService.Models.Dto.Responses.Feedback;
 
 namespace FeedbackService.Business.Feedback;
 
-public class GetFeedbackCommand(IFeedbackRepository repository) : IGetFeedbackCommand
+public class GetFeedbackCommand(
+    IMapper mapper,
+    IFeedbackRepository repository) : IGetFeedbackCommand
 {
-    public Task<ResponseInfo<GetFeedbackResponse>> ExecuteAsync(
+    public async Task<ResponseInfo<GetFeedbackResponse>> ExecuteAsync(
         Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var dbFeedback = await repository.GetAsync(id, cancellationToken)
+            ?? throw new BadRequestException($"Feedback with id = '{id}' was not found.");
+
+        var feedback = mapper.Map<GetFeedbackResponse>(dbFeedback);
+
+        return new ResponseInfo<GetFeedbackResponse>
+        {
+            Body = feedback
+        };
     }
 }

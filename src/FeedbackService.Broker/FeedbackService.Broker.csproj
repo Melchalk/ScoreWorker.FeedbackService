@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Consumers\" />
+    <PackageReference Include="MassTransit" Version="8.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FeedbackService.Business\FeedbackService.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Requests\Interfaces\" />
   </ItemGroup>
 
 </Project>

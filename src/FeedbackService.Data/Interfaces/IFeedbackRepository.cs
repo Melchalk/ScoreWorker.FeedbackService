@@ -8,4 +8,5 @@ public interface IFeedbackRepository
     Task CreateAsync(DbFeedback dbFeedback, CancellationToken cancellationToken);
     Task<bool> UpdateAsync(DbFeedback dbFeedback, CancellationToken cancellationToken);
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task<bool> SetDismissedUser(Guid reviewerId, CancellationToken cancellationToken);
 }

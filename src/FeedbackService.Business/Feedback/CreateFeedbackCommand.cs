@@ -1,16 +1,21 @@
-﻿using FeedbackService.Business.Feedback.Interfaces;
+﻿using AutoMapper;
+using FeedbackService.Business.Feedback.Interfaces;
 using FeedbackService.Data.Interfaces;
+using FeedbackService.Models.Db;
 using FeedbackService.Models.Dto.Requests.Feedback;
-using FeedbackService.Models.Dto.Responses;
 
 namespace FeedbackService.Business.Feedback;
 
-public class CreateFeedbackCommand(IFeedbackRepository repository) : ICreateFeedbackCommand
+public class CreateFeedbackCommand(
+    IMapper mapper,
+    IFeedbackRepository repository) : ICreateFeedbackCommand
 {
-    public Task<ResponseInfo<bool>> ExecuteAsync(
+    public async Task ExecuteAsync(
         CreateFeedbackRequest request,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var feedback = mapper.Map<DbFeedback>(request);
+
+        await repository.CreateAsync(feedback, cancellationToken);
     }
 }
