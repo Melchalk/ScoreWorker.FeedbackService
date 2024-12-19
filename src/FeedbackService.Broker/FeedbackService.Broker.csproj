@@ -7,15 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.3.3" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FeedbackService.Business\FeedbackService.Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Requests\Interfaces\" />
+    <ProjectReference Include="..\FeedbackService.Data\FeedbackService.Data.csproj" />
+    <ProjectReference Include="..\FeedbackService.Models.Db\FeedbackService.Models.Db.csproj" />
+    <ProjectReference Include="..\FeedbackService.Models.Dto\FeedbackService.Models.Dto.csproj" />
   </ItemGroup>
 
 </Project>

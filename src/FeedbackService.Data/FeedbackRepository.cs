@@ -7,12 +7,14 @@ namespace FeedbackService.Data;
 
 public class FeedbackRepository(IDataProvider provider) : IFeedbackRepository
 {
-    public async Task CreateAsync(
+    public async Task<Guid> CreateAsync(
         DbFeedback dbFeedback, CancellationToken cancellationToken)
     {
         await provider.Feedbacks.AddAsync(dbFeedback, cancellationToken);
 
         await provider.SaveAsync(cancellationToken);
+
+        return dbFeedback.Id;
     }
 
     public async Task<bool> DeleteAsync(

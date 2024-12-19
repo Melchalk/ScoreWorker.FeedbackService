@@ -5,6 +5,7 @@ using FeedbackService.Models.Dto.Exceptions;
 using FeedbackService.Models.Dto.Responses;
 using FeedbackService.Models.Dto.Responses.Feedback;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace FeedbackService.Business.Feedback;
 
@@ -28,7 +29,8 @@ public class GetFeedbackForUserCommand(
             Body = new GetFeedbackForUserResponse
             {
                 Feedbacks = feedbacks
-            }
+            },
+            Status = (int)HttpStatusCode.OK,
         };
     }
 }

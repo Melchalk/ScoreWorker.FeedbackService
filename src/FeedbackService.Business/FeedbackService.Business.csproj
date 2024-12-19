@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FeedbackService.Broker\FeedbackService.Broker.csproj" />
     <ProjectReference Include="..\FeedbackService.Data\FeedbackService.Data.csproj" />
     <ProjectReference Include="..\FeedbackService.Models.Dto\FeedbackService.Models.Dto.csproj" />
   </ItemGroup>

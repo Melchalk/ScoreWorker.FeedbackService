@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using FeedbackService.Broker.Publishers;
+using FeedbackService.Broker.Publishers.Interfaces;
 using FeedbackService.Business.Feedback;
 using FeedbackService.Business.Feedback.Interfaces;
 using FeedbackService.Business.Reviewer;
@@ -124,6 +126,8 @@ internal class Startup(IConfiguration configuration)
         services.AddScoped<IGetReviewersByTeamCommand, GetReviewersByTeamCommand>();
         services.AddScoped<IGetReviewerCommand, GetReviewerCommand>();
         services.AddScoped<IUpdateReviewerCommand, UpdateReviewerCommand>();
+
+        services.AddScoped<IUserService, UserService>();
     }
 
     private void UpdateDatabase(IApplicationBuilder app)

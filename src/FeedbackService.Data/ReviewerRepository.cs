@@ -7,12 +7,14 @@ namespace FeedbackService.Data;
 
 public class ReviewerRepository(IDataProvider provider) : IReviewerRepository
 {
-    public async Task CreateAsync(
+    public async Task<Guid> CreateAsync(
         DbReviewer dbReviewer, CancellationToken cancellationToken)
     {
         await provider.Reviewers.AddAsync(dbReviewer, cancellationToken);
 
         await provider.SaveAsync(cancellationToken);
+
+        return dbReviewer.Id;
     }
 
     public async Task<bool> DeleteAsync(
@@ -46,6 +48,13 @@ public class ReviewerRepository(IDataProvider provider) : IReviewerRepository
             .AsNoTracking()
             .Include(r => r.Feedbacks)
             .FirstOrDefaultAsync(r => r.UserId == userId, cancellationToken);
+    }
+
+    public IQueryable<DbReviewer> GetByUserIds(List<Guid> userIds)
+    {
+        return provider.Reviewers
+            .AsNoTracking()
+            .Where(r => userIds.Contains(r.UserId));
     }
 
     public async Task<bool> UpdateAsync(

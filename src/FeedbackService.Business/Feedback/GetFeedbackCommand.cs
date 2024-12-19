@@ -4,6 +4,7 @@ using FeedbackService.Data.Interfaces;
 using FeedbackService.Models.Dto.Exceptions;
 using FeedbackService.Models.Dto.Responses;
 using FeedbackService.Models.Dto.Responses.Feedback;
+using System.Net;
 
 namespace FeedbackService.Business.Feedback;
 
@@ -21,7 +22,8 @@ public class GetFeedbackCommand(
 
         return new ResponseInfo<GetFeedbackResponse>
         {
-            Body = feedback
+            Body = feedback,
+            Status = (int)HttpStatusCode.OK,
         };
     }
 }

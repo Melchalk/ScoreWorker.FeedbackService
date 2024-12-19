@@ -1,6 +1,8 @@
-﻿namespace FeedbackService.Business.Reviewer.Interfaces;
+﻿using FeedbackService.Models.Dto.Responses;
+
+namespace FeedbackService.Business.Reviewer.Interfaces;
 
 public interface IDeleteReviewerCommand
 {
-    Task ExecuteAsync(Guid id, CancellationToken cancellationToken);
+    Task<ResponseInfo<bool>> ExecuteAsync(Guid id, CancellationToken cancellationToken);
 }

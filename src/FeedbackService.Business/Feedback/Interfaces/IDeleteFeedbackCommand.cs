@@ -4,5 +4,5 @@ namespace FeedbackService.Business.Feedback.Interfaces;
 
 public interface IDeleteFeedbackCommand
 {
-    Task ExecuteAsync(Guid id, CancellationToken cancellationToken);
+    Task<ResponseInfo<bool>> ExecuteAsync(Guid id, CancellationToken cancellationToken);
 }
